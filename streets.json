@@ -1,0 +1,31 @@
+{
+  "streets": [
+    "Main Street",
+    "Oak Avenue",
+    "Elm Street",
+    "Maple Avenue",
+    "Pine Street"
+  ],
+  "directions": [
+    {
+      "start": "Main Street",
+      "end": "Oak Avenue",
+      "streetNames": ["First Street", "Second Street", "Third Street"]
+    },
+    {
+      "start": "Oak Avenue",
+      "end": "Elm Street",
+      "streetNames": ["Fourth Street", "Fifth Street"]
+    },
+    {
+      "start": "Elm Street",
+      "end": "Maple Avenue",
+      "streetNames": ["Sixth Street"]
+    },
+    {
+      "start": "Maple Avenue",
+      "end": "Pine Street",
+      "streetNames": ["Seventh Street", "Eighth Street"]
+    }
+  ]
+}

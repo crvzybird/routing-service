@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Street Directions</title>
+</head>
+<body>
+  <label for="origin">Origin:</label>
+  <input type="text" id="origin" name="origin">
+  <br>
+  <label for="destination">Destination:</label>
+  <input type="text" id="destination" name="destination">
+  <br>
+  <button id="getDirectionsBtn">Get Directions</button>
+  <br>
+  <ul id="directionsList"></ul>
+  <script>
+    const originInput = document.getElementById('origin');
+    const destinationInput = document.getElementById('destination');
+    const getDirectionsBtn = document.getElementById('getDirectionsBtn');
+    const directionsList = document.getElementById('directionsList');
+    let ws;
+
+    // Create a WebSocket connection when the Get Directions button is clicked
+    getDirectionsBtn.addEventListener('click', () => {
+      if (ws) {
+        ws.close();
+      }
+
+      const origin = originInput.value.trim();
+      const destination = destinationInput.value.trim();
+
+      if (!origin || !destination) {
+        alert('Please enter an origin and a destination');
+        return;
+      }
+
+      ws = new WebSocket('ws://localhost:3000');
+
+      ws.addEventListener('open', () => {
+        // Send the origin and destination street names to the server
+        ws.send(JSON.stringify({ origin, destination }));
+      });
+
+      ws.addEventListener('message', (event) => {
+        // Add each received street name to the list of directions
+        const streetName = JSON.parse(event.data).streetName;
+        const listItem = document.createElement('li');
+        const textNode = document.createTextNode(streetName);
+        listItem.appendChild(textNode);
+        directionsList.appendChild(listItem);
+      });
+
+      ws.addEventListener('close', () => {
+        // Clean up the list of directions when the WebSocket connection is closed
+        directionsList.innerHTML = '';
+      });
+    });
+  </script>
+</body>
+</html>
