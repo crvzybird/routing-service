@@ -3,12 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <title>Street Directions</title>
+  <style>
+    input[type="text"] {
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      padding: 5px;
+      border-bottom: 1px solid #ccc;
+      font-size: 16px;
+    }
+  </style>
 </head>
 <body>
   <label for="origin">Origin:</label>
+  <br>
   <input type="text" id="origin" name="origin">
   <br>
   <label for="destination">Destination:</label>
+  <br>
   <input type="text" id="destination" name="destination">
   <br>
   <button id="getDirectionsBtn">Get Directions</button>

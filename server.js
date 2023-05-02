@@ -42,18 +42,26 @@ wss.on('connection', (ws) => {
 
     // Stream the filtered directions to the client every 5 seconds
     let index = 0;
-    intervalId = setInterval(() => {
-      if (index < filteredDirections.length) {
-        const streetNames = filteredDirections[index].streetNames;
-        for (let i = 0; i < streetNames.length; i++) {
-          ws.send(JSON.stringify({ streetName: streetNames[i] }));
-        }
-        index++;
-      } else {
-        clearInterval(intervalId);
-        ws.close();
-      }
-    }, 5000);
+const sendDirections = () => {
+  if (index >= filteredDirections.length) {
+    ws.close();
+    return;
+  }
+
+  const streetNames = filteredDirections[index].streetNames;
+  for (let i = 0; i < streetNames.length; i++) {
+    setTimeout(() => {
+      ws.send(JSON.stringify({ streetName: streetNames[i] }));
+    }, i * 1000);
+  }
+  index++;
+
+  // Schedule the next call to sendDirections in 8 seconds
+  setTimeout(sendDirections, 8000);
+};
+
+// Call sendDirections for the first time
+sendDirections();
   });
 
   // Stop streaming data when the WebSocket connection is closed
